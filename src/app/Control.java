@@ -6,14 +6,13 @@ public class Control {
 
     private int guessNumber;
 
-    private int intputNumber;
+    private int inputNumber;
 
     Database database;
 
     public Control(Database database) {
         this.database = database;
     }
-
 
 
     public void playgame() {
@@ -23,26 +22,25 @@ public class Control {
         guessNumber = database.getRandom();
 
         //2. 사용자 입력 받기
+        userInput();
+        //4. 정답을 입력 할때까지 2.3번 반복
+        //5. 정답 출력
+
+
+        //6. 지금까지 입력한 숫자를 정답과의 오차와 함께 순서대로 출력
+        System.out.println(database.getTrysave());
+        System.out.println(database.getDiff());
+    }
+
+    private void userInput() {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            while (true) {
-                System.out.println("10~99사이의 숫자를 입력해 주세요");
+            input10To99(scanner);
 
-                try {
-
-                    intputNumber = Integer.parseInt(scanner.nextLine()); //nextInt는 버그가 많다.
-
-                } catch (Exception E) {
-                    System.out.println("숫자를 입력해주세요.");
-                    continue;
-                }
-                break;
-            }
-
-            int diff = guessNumber - intputNumber;
-            database.addToinputList(intputNumber);
-            database.addToDiffList(Math.abs(intputNumber - guessNumber));
+            int diff = guessNumber - inputNumber;
+            database.addToinputList(inputNumber);
+            database.addToDiffList(Math.abs(inputNumber - guessNumber));
             //TODO
 
             //3. 입력한 수가 guessNumber보다 크면  up 작으면 down출력
@@ -56,17 +54,23 @@ public class Control {
                 break;
             }
         }
-        //4. 정답을 입력 할때까지 2.3번 반복
-        //5. 정답 출력
+    }
 
+    private void input10To99(Scanner scanner) {
 
-        //6. 지금까지 입력한 숫자를 정답과의 오차와 함께 순서대로 출력
-        System.out.println(database.getTrysave());
-        System.out.println(database.getDiff());
+        System.out.println("10~99사이의 숫자를 입력해 주세요");
+
+        try {
+
+            inputNumber = Integer.parseInt(scanner.nextLine()); //nextInt는 버그가 많다.
+
+        } catch (Exception E) {
+            System.out.println("숫자를 입력해주세요.");
+            input10To99(scanner);
+        }
+
     }
 }
-
-
 
 
 //2. 사용자 입력 받기
