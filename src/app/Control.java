@@ -35,26 +35,31 @@ public class Control {
     private void userInput() {
         Scanner scanner = new Scanner(System.in);
 
-        while (true) {
-            input10To99(scanner);
-
-            int diff = guessNumber - inputNumber;
-            database.addToinputList(inputNumber);
-            database.addToDiffList(Math.abs(inputNumber - guessNumber));
-            //TODO
-
-            //3. 입력한 수가 guessNumber보다 크면  up 작으면 down출력
-
-            if (diff > 0) {
-                System.out.println("제가 입력한 값이 입력값보다 큽니다.");
-            } else if (diff < 0) {
-                System.out.println("제가 입력한 값이 입력값보다 작습니다.");
-            } else {
-                System.out.println("맞췄습니다.");
-                break;
-            }
-        }
+        compareNumber(scanner);
     }
+
+    private void compareNumber(Scanner scanner) {
+        input10To99(scanner);
+
+        int diff = guessNumber - inputNumber;
+        database.addToinputList(inputNumber);
+        database.addToDiffList(Math.abs(inputNumber - guessNumber));
+        //TODO
+
+        //3. 입력한 수가 guessNumber보다 크면  up 작으면 down출력
+        if (diff == 0) {
+            System.out.println("맞췄습니다.");
+            return;
+        }
+
+        if (diff > 0) {
+            System.out.println("제가 입력한 값이 입력값보다 큽니다.");
+        } else {
+            System.out.println("제가 입력한 값이 입력값보다 작습니다.");
+        }
+        compareNumber(scanner);
+    }
+
 
     private void input10To99(Scanner scanner) {
 
